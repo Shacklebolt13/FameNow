@@ -21,4 +21,5 @@ Steps to run the project:<br>
       <dt>linux: </dt>
       <dd>$python3 manage.py runserver</dd>
     </dl>
+  <li>visit <a href="127.0.0.1:8000">127.0.0.1:8000</a> in your browser</li>
 </p>
