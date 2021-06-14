@@ -1,0 +1,13 @@
+signin:
+	phno
+	email
+	pass(conf or show)
+
+redirect to login-> home
+
+about:
+	name 
+	roll
+	regno
+
+
