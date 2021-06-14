@@ -2,6 +2,6 @@
 a social media website made in django
 
 
-branches:
-frontEnd: html files only
-withBackEnd: whole django project
+branches:<br>
+frontEnd: html files only<br>
+withBackEnd: whole django project<br>
