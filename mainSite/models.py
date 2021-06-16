@@ -7,5 +7,6 @@ class User(models.Model):
     lastName=models.TextField(max_length=50)
     phNo=PhoneNumberField(blank=False, unique=True)
     email=models.EmailField(unique=True)
+    password=models.CharField(max_length=64,default="")
 
     
