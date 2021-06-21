@@ -1,4 +1,7 @@
 {% extends "index.html" %}
+{% load static%}
+{% block title%}Login{% endblock title%}
+
 
 {% block navbar%}
     <ul class="navbar-nav">
@@ -21,8 +24,8 @@
 
 {% block content%}
     <h4 class="card-title">Login</h4>
-            <form method='POST' target="#"><!--TODO:Give appropriate target and csrf token-->
-              
+            <form method='post' target="loginaction">
+              {% csrf_token%}
               <div class="input-group flex-nowrap" style="margin-top: 10%;margin-bottom: 10%;">
                   <span class="input-group-text" id="addon-wrapping">@</span>
                   <input type="text" class="form-control" placeholder="Email-Id" aria-label="Username" aria-describedby="addon-wrapping">
@@ -41,9 +44,10 @@
                   </svg>
                 </span>
 
-            </div>
-              <div style="margin-top: 10%;margin-bottom: 10%;">
               </div>
-              <button type="submit" class="btn btn-outline-primary" style="border-color:purple;color:purple;" onmouseover="this.style.background='purple';this.style.color='white'" onMouseOut="this.style.color='purple';this.style.background='white'">Submit</button>
+              <div style="margin-top: 10%;margin-bottom: 10%;">
+                <button type="submit" class="btn btn-outline-primary" style="border-color:purple;color:purple;" onmouseover="this.style.background='purple';this.style.color='white'" onMouseOut="this.style.color='purple';this.style.background='white'">Submit</button>
+              </div>
+              
             </form>
 {% endblock content%}

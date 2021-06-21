@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 
 def index(request):
@@ -20,3 +21,6 @@ def home(request):
     params={'Title':'Home'}
     return render(request,'home.html')
 
+def createId(request):
+    
+    return HttpResponse('Created')
