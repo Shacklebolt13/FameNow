@@ -1,6 +1,6 @@
 {% extends "index.html" %}
-{% load static%}
-{% block title%}Login{% endblock title%}
+
+{% block title%}LogIn{% endblock title%}
 
 
 {% block navbar%}
@@ -24,7 +24,7 @@
 
 {% block content%}
     <h4 class="card-title">Login</h4>
-            <form method='post' target="loginaction">
+            <form method='post' action="loginaction">
               {% csrf_token%}
               <div class="input-group flex-nowrap" style="margin-top: 10%;margin-bottom: 10%;">
                   <span class="input-group-text" id="addon-wrapping">@</span>
