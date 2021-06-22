@@ -10,6 +10,7 @@ class User(models.Model):
     password=models.CharField(max_length=64,default="")
     gender=models.BooleanField()
     profilePicture=models.ImageField(upload_to="images/useruploads")
+    salt=models.CharField(max_length=10)
     
     def __str__(self):
         return f"{self.id} {self.firstName} {self.lastName}" 
