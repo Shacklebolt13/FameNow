@@ -26,7 +26,7 @@ urlpatterns = [
     path('signin',views.signin),
     path('about',views.about),
     #path('home',views.home),
-    path('home/',include('mainSite.urls')),
+    path('home',include('mainSite.urls')),
     path('createid',views.createId),
     path('loginaction',views.loginAction),
 ]

@@ -1,3 +1,4 @@
+from django.http import response
 from django.http.request import HttpRequest
 from django.http.response import Http404, HttpResponse
 from django.shortcuts import redirect, render
@@ -5,6 +6,7 @@ from mainSite.models import User
 import datetime
 from django.conf import settings
 import bcrypt
+import sys
 
 def index(request):
     if(checkLoginStatus(request)):
@@ -40,23 +42,32 @@ def createId(request):
     gender=request.POST.get('gender')
     gender=True if gender=="true" else False
     salt=bcrypt.gensalt()
-    print(salt)
-
+    password=bcrypt.hashpw(password.encode('utf-8'),salt)
+    password=str(password,encoding='utf-8')
     if(gender):
         dp="images/defaultMan.png"
     else:
         dp="images/defaultWoman.png"
 
     user=User(firstName=fname,lastName=lname,phNo=phone,email=mail,password=password,gender=gender,profilePicture=dp)
-    print(user)
     user.save()
     response= redirect('/')
     response.set_cookie('email',mail,7,datetime.datetime.now()+datetime.timedelta(days=7))  #expires a week later
     return response
 
-def loginAction(request):
+def loginAction(request : HttpRequest):
     confHidden(request)
-    return
+    mail=request.POST.get('mail',False)
+    password=request.POST.get('pass',False)
+    user=User.objects.filter(email=mail)
+    if(len(user)!=0):
+        hashed=user[0].password.encode('utf-8')
+        if(bcrypt.checkpw(password.encode('utf-8'),hashed)):
+            response=home(request)
+            response.set_cookie('email',mail,7,datetime.datetime.now()+datetime.timedelta(days=7))  #expires a week later
+            return response
+
+    return redirect('login')
 
 
 def confHidden(request : HttpRequest):
@@ -68,7 +79,6 @@ def confHidden(request : HttpRequest):
 def checkLoginStatus(request):
     
     if('email' in request.COOKIES):
-        print('all ok')
         try:
             mail=User.objects.get(email=request.COOKIES['email']).email
         except Exception:
