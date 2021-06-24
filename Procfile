@@ -1,1 +1,1 @@
-web: socialMediaSite.wsgi
+web: gunicorn dep:app
