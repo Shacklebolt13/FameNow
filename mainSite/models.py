@@ -15,14 +15,3 @@ class User(models.Model):
     def __str__(self):
         return f"{self.id} {self.firstName} {self.lastName}" 
 
-    def create(firstName,lastName,phNo,email,password,gender,profilePicture,self) -> None:
-        data={
-            "firstName":firstName,
-            "lastName":lastName,
-            "phNo":phNo,
-            "password":password,
-            "gender":gender,
-            "email":email,
-            "profilePicture":profilePicture
-        }
-        super().__init__(kwargs=data)
