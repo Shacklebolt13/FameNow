@@ -12,7 +12,7 @@ def profile(request: HttpRequest):
     userDetails :Detail
 
     uid=request.GET.get('uid',None)
-    if(len(uid)==0):
+    if(uid is not None and len(uid)==0):
         uid=None
     
     if(uid is None):
