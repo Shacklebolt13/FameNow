@@ -24,7 +24,7 @@ def profile(request: HttpRequest):
     uid=request.GET.get('uid',None)
     if(uid is not None and len(uid)==0):
         uid=None
-    
+
     if(uid is None):
         return HttpResponse("User Not Found")
 
@@ -43,7 +43,8 @@ def profile(request: HttpRequest):
         'phone':phone,
         'gender':gender,
         'dp':dp,
-        'bio':bio
+        'bio':bio,
+        'mydp':""
     }
 
     return render(request,'profile.html',params)
