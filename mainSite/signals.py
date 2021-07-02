@@ -10,4 +10,4 @@ def CreateUser(instance: User,created,**kwargs):
         else:
             dp="images/defaultWoman.png"
     
-        Detail(user=instance,profilePicture=dp).save()
+        Detail(user=instance,profilePicture=dp,bio="I wish i was a little bit taller, wish i was a baller, wish i had a girl… also.").save()

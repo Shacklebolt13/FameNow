@@ -1,11 +1,21 @@
 from django.http.request import HttpRequest
 from django.http.response import Http404, HttpResponse
-from django.shortcuts import render
-from .models import Detail
+from django.shortcuts import redirect, render
+from .models import Detail,User
 
+def home(request: HttpRequest):
+    mail=request.COOKIES.get('mail',None)
+    if(mail is None):
+        return redirect('login')
+    
+    user=User.objects.filter(email=mail)
+    if(len(user)==0):
+        return redirect('login')
+    
+    id=user[0].id
+    
 
-def home(request):
-    params={}
+    params={'id':id}
     return render(request,'home.html',params)
 
 def profile(request: HttpRequest):
@@ -25,14 +35,15 @@ def profile(request: HttpRequest):
     phone=userDetails.user.phNo
     gender='Male' if userDetails.user.gender else 'Female'
     dp=userDetails.profilePicture
-    
+    bio=userDetails.bio
     params={
         'fname':fname,
         "lname":lname,
         'mail':mail,
         'phone':phone,
         'gender':gender,
-        'dp':dp
+        'dp':dp,
+        'bio':bio
     }
 
     return render(request,'profile.html',params)

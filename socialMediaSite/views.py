@@ -8,6 +8,7 @@ from django.conf import settings
 import bcrypt
 import sys
 from django.db import IntegrityError
+from mainSite.views import home
 
 def index(request):
     if(checkLoginStatus(request)):
@@ -31,11 +32,6 @@ def about(request):
 def signin(request):
     params={}
     return render(request,'signin.html',params)
-
-
-def home(request):
-    params={}
-    return render(request,'home.html',params)
 
 
 def createId(request):

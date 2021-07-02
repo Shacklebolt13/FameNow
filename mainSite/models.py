@@ -16,7 +16,7 @@ class User(models.Model):
 class Detail(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     profilePicture=models.ImageField(upload_to="images/useruploads")
-
+    bio=models.TextField(max_length=250)
     def __str__(self):
         return f"{self.user.id} details" 
     
