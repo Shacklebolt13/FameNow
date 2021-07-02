@@ -7,7 +7,7 @@ import datetime
 from django.conf import settings
 import bcrypt
 import sys
-
+from django.db import IntegrityError
 
 def index(request):
     if(checkLoginStatus(request)):
@@ -53,13 +53,13 @@ def createId(request):
     password=bcrypt.hashpw(password.encode('utf-8'),salt)
     password=str(password,encoding='utf-8')
     
-    if(gender):
-        dp="images/defaultMan.png"
-    else:
-        dp="images/defaultWoman.png"
+    user=User(firstName=fname,lastName=lname,phNo=phone,email=mail,password=password,gender=gender)
+    try:
+        user.save()
+    except IntegrityError:
+        params={'message':'email already exists'}
+        return render(request,'signin.html',params)
 
-    user=User(firstName=fname,lastName=lname,phNo=phone,email=mail,password=password,gender=gender,profilePicture=dp)
-    user.save()
     
     response= redirect('/')
     response.set_cookie('email',mail,7,datetime.datetime.now()+datetime.timedelta(days=7))  #expires a week later
