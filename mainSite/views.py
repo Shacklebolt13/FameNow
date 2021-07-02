@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from .models import Detail,User
 
 def home(request: HttpRequest):
-    mail=request.COOKIES.get('mail',None)
+    mail=request.COOKIES.get('email',None)
     if(mail is None):
         return redirect('login')
     
