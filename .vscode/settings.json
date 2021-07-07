@@ -2,5 +2,5 @@
     "files.watcherExclude": {
         "**/smc/**": true
     },
-    "python.pythonPath": "smc/bin/python"
+    "python.pythonPath": "smc/bin/python3.9"
 }
