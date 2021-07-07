@@ -1,34 +1,51 @@
+from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from django.http.response import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from .models import Detail,User
 
 def home(request: HttpRequest):
-    mail=request.COOKIES.get('email',None)
-    if(mail is None):
+    #TODO additional check for login using csrf or some encryption
+    id=request.COOKIES.get('id',None)
+    if(id is None):
         return redirect('login')
     
-    user=User.objects.filter(email=mail)
+    user=User.objects.filter(id=id)
     if(len(user)==0):
         return redirect('login')
     
     id=user[0].id
     
+    url=request.build_absolute_uri()
+    profileUri=''
 
-    params={'id':id}
+    if('home' in url):
+        profileUri=f'profile?uid={id}'
+    else:
+        profileUri=f'home/profile?uid={id}'
+    
+    if(not url.endswith('/')):
+        url+="/"
+    url=url+profileUri
+
+    params={'profileUrl':url}
     return render(request,'home.html',params)
 
 def profile(request: HttpRequest):
     userDetails :Detail
 
     uid=request.GET.get('uid',None)
+    print(uid)
     if(uid is not None and len(uid)==0):
         uid=None
 
     if(uid is None):
-        return HttpResponse("User Not Found")
+        return HttpResponse("""User Not Found  <a href="/home/">HOME</a> """) 
 
-    userDetails=Detail.objects.filter(user_id=uid)[0]
+    userDetails=Detail.objects.filter(user=uid)
+    if(len(userDetails)==0):
+        return HttpResponse("""User Not Found  <a href="/home/">HOME</a> """)  
+    userDetails=userDetails[0]
     fname=userDetails.user.firstName
     lname=userDetails.user.lastName
     mail=userDetails.user.email
@@ -36,7 +53,23 @@ def profile(request: HttpRequest):
     gender='Male' if userDetails.user.gender else 'Female'
     dp=userDetails.profilePicture
     bio=userDetails.bio
+
+    myId=request.COOKIES.get('id',None)
+    myProfile=request.build_absolute_uri().split('=')[0]+f"={myId}"
+    if(myId is None):
+        mydp='/images/unknownUser.png'
+    else:
+        me=Detail.objects.filter(user=myId)
+       
+        if(len(me)==0):
+            mydp='/images/unknownUser.png'
+        else:
+            me=me[0]
+            mydp=me.profilePicture
+    
     params={
+        'myProfile':myProfile,
+        'id':myId,
         'fname':fname,
         "lname":lname,
         'mail':mail,
@@ -44,7 +77,7 @@ def profile(request: HttpRequest):
         'gender':gender,
         'dp':dp,
         'bio':bio,
-        'mydp':""
+        'mydp':mydp
     }
 
     return render(request,'profile.html',params)

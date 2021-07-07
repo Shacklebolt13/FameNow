@@ -15,7 +15,7 @@ def index(request):
         return home(request)
     else:
         response=login(request)
-        response.delete_cookie('email')
+        response.delete_cookie('id')
         return response
 
 
@@ -33,6 +33,10 @@ def signin(request):
     params={}
     return render(request,'signin.html',params)
 
+def logout(request :HttpRequest):
+    resp=redirect("index")
+    resp.delete_cookie('id')
+    return resp
 
 def createId(request):
     confHidden(request)
@@ -52,13 +56,12 @@ def createId(request):
     user=User(firstName=fname,lastName=lname,phNo=phone,email=mail,password=password,gender=gender)
     try:
         user.save()
-    except IntegrityError:
-        params={'message':'email already exists'}
+    except IntegrityError as e:
+        print(e)
+        params={'message':str(e)}
         return render(request,'signin.html',params)
-
-    
     response= redirect('/')
-    response.set_cookie('email',mail,7,datetime.datetime.now()+datetime.timedelta(days=7))  #expires a week later
+    response.set_cookie('id',user.id,7,datetime.datetime.now()+datetime.timedelta(days=7))  #expires a week later
     
     return response
 
@@ -72,8 +75,8 @@ def loginAction(request : HttpRequest):
     if(len(user)!=0):
         hashed=user[0].password.encode('utf-8')
         if(bcrypt.checkpw(password.encode('utf-8'),hashed)):
-            response=home(request)
-            response.set_cookie('email',mail,7,datetime.datetime.now()+datetime.timedelta(days=7))  #expires a week later
+            response=redirect('loggedHome')
+            response.set_cookie('id',user[0].id,7,datetime.datetime.now()+datetime.timedelta(days=7))  #expires a week later
             return response
 
     return redirect('login')
@@ -87,11 +90,12 @@ def confHidden(request : HttpRequest):
 
 def checkLoginStatus(request):
     
-    if('email' in request.COOKIES):
+    if('id' in request.COOKIES):
         try:
-            mail=User.objects.get(email=request.COOKIES['email']).email
+            print(User.objects.get(id=request.COOKIES['id']).id)
         except Exception:
             return False
         return True 
     else:
         return False
+

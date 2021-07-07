@@ -1,5 +1,6 @@
-**/__pycache__/**
+*/__pycache__/*
 __pycache__
-smc/**
+smc
 images/useruploads
 collected
+socialMediaSite/__pycache__/views.cpython-39.pyc
