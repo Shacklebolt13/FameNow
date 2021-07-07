@@ -57,12 +57,12 @@ def profile(request: HttpRequest):
     myId=request.COOKIES.get('id',None)
     myProfile=request.build_absolute_uri().split('=')[0]+f"={myId}"
     if(myId is None):
-        mydp='/images/unknownUser.png'
+        mydp='images/unknownUser.png'
     else:
         me=Detail.objects.filter(user=myId)
        
         if(len(me)==0):
-            mydp='/images/unknownUser.png'
+            mydp='images/unknownUser.png'
         else:
             me=me[0]
             mydp=me.profilePicture
