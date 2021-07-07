@@ -21,3 +21,4 @@ class Detail(models.Model):
     def __str__(self):
         return f"{self.user.id} details" 
     
+    #TODO add a model named friends (M2M) then add the reference to Detail.
