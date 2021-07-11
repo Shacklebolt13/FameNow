@@ -2,7 +2,7 @@ from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from django.http.response import Http404, HttpResponse
 from django.shortcuts import redirect, render
-from .models import Detail,User
+from .models import Detail, Friend,User
 
 def home(request: HttpRequest):
     #TODO additional check for login using csrf or some encryption
@@ -97,6 +97,21 @@ def friends(request:HttpRequest,message=""):
 
     id=user.user_id
     dp=user.profilePicture
+    users=User.objects.all().values()
+    friendList=Friend.objects.get(this=id).others.values_list()
+    #print(friendList,'\n\n\n',dir(friendList))
+    ulist=[]
+    for user in users:
+        if(user['id']==id):
+            continue;
 
-    params={'id':id,'mydp':dp}
+        details=Detail.objects.get(user_id=user['id'])
+        user['profilePicture']=details.profilePicture
+        user['bio']=details.bio
+        ulist.append(user)
+    users=ulist
+    del ulist
+    friendList=[ friend[0] for friend in friendList]
+    print(friendList)
+    params={'myid':id,'mydp':dp,'users':users,'friendList':friendList}
     return render(request,'friends.html',params)

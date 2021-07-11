@@ -48,48 +48,70 @@
         </div>
     </nav>
 <br>
-
     <!---------------------------------------------Ends navigation------------------------------>
+
+
+    <script> 
+        var flist={{friendList}};
+    </script>
+
+
+
+    <!---------------------------------------------Start Middle------------------------------>
     <center>
     <div class="container my-10">
         <div >
             <div class="middle-column">
                 <div class="card" >
                     <div class="card-header bg-transparent">
-                        <form class="form-inline">
+                        <form class="form-inline" id="search">
                             <div class="input-group w-100">
-                            <input type="text" name="message" id="message" placeholder="Find Someone Awesome" class="form-control form-control-md">
+                            <input type="text" name="message" id="s" placeholder="Find Someone Awesome" class="form-control form-control-md">
                             <div class="input-group-append">
-                                    <div class="input-group-text">
+                                    <button type="submit" class="input-group-text" >
                                             <i class="fas fa-search"></i>
-                                        </div>
+                                    </button>
                             </div>
                             </div>
                         </form>
                     </div>
 
-                        
-        <div class="card-body"><!--User-->
+        {% for user in users%}                
+        <div id="Uid{{user.id}}" class="card-body"><!--User-->
             <div class="media">
-                <img src="/images/unknownUser.png" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
+                <img src="/{{user.profilePicture}}" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                 <div class="media-body">
-                    <h5 class="card-title text-justify">Uname</h5>
-                    <p class="card-text text-justify">Body</p>    
-
+                    <h5 class="card-title text-justify">{{user.firstName}} {{user.lastName}}</h5>
+                    <p class="card-text text-justify">{{user.bio}}</p>    
                 </div>
                 <small>
-                    <div class="input-group-text">
-                        <i class="fas fa-plus"></i>
-                        <i class="fas fa-check"></i>
+                    <div class="input-group-text" >
+                        <i id="btn{{user.id}}" class="fas" onclick="alert('coming soon');"></i>
+                        <script>
+                            function checkAndAddBtn(){
+                            var id={{user.id}};
+                            var btn = document.getElementById('btn{{user.id}}');
+                            if(flist.includes(id)){
+                                btn.classList.toggle('fa-plus');
+                                console.log(btn.classList.toString())
+                                
+                            }else{
+                                btn.classList.toggle('fa-times');
+
+                            }
+                        }
+                        checkAndAddBtn();
+                        </script>
+                        <!-- <i class="fas fa-check"></i>
                         <i class="fas fa-times"></i>
-                        <i class="fas fa-spinner"></i>
+                        <i class="fas fa-spinner"></i> -->
+                        
                     </div>
                 </small>
             </div>
         </div>
-
-                            
-
+        <hr>
+        {% endfor%}
     <br> <br> <br><br> <br> <br>
 </div> 
 </center>   
