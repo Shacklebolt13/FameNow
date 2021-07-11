@@ -18,7 +18,7 @@
 
 
 
-<title>Application</title>
+<title>Profile</title>
 </head>
 <body>
 
@@ -33,11 +33,11 @@
     
             <div class="collapse navbar-collapse" id="responsive">
                 <ul class="navbar-nav mr-auto text-capitalize">
-                    <li class="nav-item"><a href="{{object.build_absolute_uri}}/home/" class="nav-link">home</a></li>
-                    <li class="nav-item"><a href="{{object.build_absolute_uri}}" class="nav-link  active">profile</a></li>
+                    <li class="nav-item"><a href="{% url 'loggedHome'%}" class="nav-link">home</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link  active">profile</a></li>
                     <li class="nav-item"><a href="#modalview" data-toggle="modal" class="nav-link">messages</a></li>
-                    <li class="nav-item"><a href="notification.html" class="nav-link">docs</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link ">growl</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">docs</a></li>
+                    <li class="nav-item"><a href="{% url 'friends' %}" class="nav-link ">friends</a></li>
                     <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link ">logout</a></li>
     
                 </ul>

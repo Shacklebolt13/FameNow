@@ -23,4 +23,5 @@ from django.conf.urls.static import static
 urlpatterns = [
    path("",views.home,name="loggedHome"),
    path("profile",views.profile,name="userProfile"),
+   path("friends",views.friends,name="friends"),
 ]

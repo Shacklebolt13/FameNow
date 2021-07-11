@@ -15,6 +15,8 @@ def home(request: HttpRequest):
         return redirect('login')
     
     id=user[0].id
+
+    dp=Detail.objects.filter(user_id=id)[0].profilePicture
     
     url=request.build_absolute_uri()
     profileUri=''
@@ -28,7 +30,7 @@ def home(request: HttpRequest):
         url+="/"
     url=url+profileUri
 
-    params={'profileUrl':url}
+    params={'profileUrl':url,'mydp':dp}
     return render(request,'home.html',params)
 
 def profile(request: HttpRequest):
@@ -81,3 +83,20 @@ def profile(request: HttpRequest):
     }
 
     return render(request,'profile.html',params)
+
+
+def friends(request:HttpRequest,message=""):
+    id=request.COOKIES.get('id',None)
+    if(id is None):
+        redirect('/')
+    user=Detail.objects.filter(user_id=id)
+    if(len(user)==0):
+        redirect('/')
+
+    user=user[0]
+
+    id=user.user_id
+    dp=user.profilePicture
+
+    params={'id':id,'mydp':dp}
+    return render(request,'friends.html',params)
