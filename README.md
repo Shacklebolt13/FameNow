@@ -6,4 +6,4 @@ branches:<br>
 frontEnd: html files only<br>
 withBackEnd: whole django project<br>
 <br>
-<a href="famenow.herokuapp.com">Demo: </a>
+<a href="https://famenow.herokuapp.com">Demo </a>
