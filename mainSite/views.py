@@ -1,6 +1,5 @@
-from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
-from django.http.response import Http404, HttpResponse
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Detail, Friend,User
 
@@ -101,7 +100,6 @@ def friends(request:HttpRequest,message=""):
         
         user['profilePicture']=details.profilePicture
         user['bio']=details.bio
-        print(user)
         ulist.append(user)
 
     users=ulist
