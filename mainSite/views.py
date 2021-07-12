@@ -18,19 +18,8 @@ def home(request: HttpRequest):
 
     dp=Detail.objects.filter(user_id=id)[0].profilePicture
     
-    url=request.build_absolute_uri()
-    profileUri=''
 
-    if('home' in url):
-        profileUri=f'profile?uid={id}'
-    else:
-        profileUri=f'home/profile?uid={id}'
-    
-    if(not url.endswith('/')):
-        url+="/"
-    url=url+profileUri
-
-    params={'profileUrl':url,'mydp':dp}
+    params={'myid':id,'mydp':dp}
     return render(request,'home.html',params)
 
 def profile(request: HttpRequest):
@@ -100,15 +89,21 @@ def friends(request:HttpRequest,message=""):
     users=User.objects.all().values()
     friendList=Friend.objects.get(this=id).others.values_list()
     #print(friendList,'\n\n\n',dir(friendList))
+
     ulist=[]
     for user in users:
         if(user['id']==id):
             continue;
 
         details=Detail.objects.get(user_id=user['id'])
+        fl=Friend.objects.get(this=details.user_id).others.values_list()
+        user['flist']=[f[0]for f in fl]
+        
         user['profilePicture']=details.profilePicture
         user['bio']=details.bio
+        print(user)
         ulist.append(user)
+
     users=ulist
     del ulist
     friendList=[ friend[0] for friend in friendList]

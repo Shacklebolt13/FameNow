@@ -12,9 +12,7 @@
         <link rel="stylesheet" href="{% static 'mainSite/css_js/lightbox.min.css'%}">
         <script type="text/javascript" src="{% static 'mainSite/css_js/lightbox-plus-jquery.min.js' %}"></script>
         <!------------------LIght BOx for Gallery-------------->
-        
-        
-        
+            
         
         
         </head>
@@ -22,6 +20,37 @@
     </head>
     <body>
         
+        <script>
+            function checkAndAddBtn(id,olist){
+                console.log(olist);
+                var me={{myid}};
+                var btn = document.getElementById('btn'+id);
+                var txt = document.getElementById('stat'+id);
+                var state=0;
+                if(olist.includes(me))
+                    state+=1;
+                if(flist.includes(id))
+                    state+=2;
+
+                
+                if(state==0){
+                    btn.classList.toggle('fa-plus');    
+                    txt.innerHTML="Add Friend";                
+                }else if(state==3){
+                    //TODO add confirmation
+                    btn.classList.toggle('fa-times');
+                    txt.innerHTML="Remove Friend";         
+                }else if(state==2){
+                    btn.classList.toggle('fa-spinner');
+                    txt.innerHTML="Friend Request Sent";         
+                }else{
+                    btn.classList.toggle('fa-check');
+                    txt.innerHTML="Accept Friend Request";         
+                }
+            }
+        </script>
+        
+
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color:#3097D1">
         <a href="{% url 'loggedHome' %}" class="navbar-brand"><img src="{% static 'mainSite/images/brand-white.png'%}" alt="logo" class="img-fluid" width="80px" height="100px"></a>
 
@@ -31,10 +60,10 @@
         <div class="collapse navbar-collapse" id="responsive">
             <ul class="navbar-nav mr-auto text-capitalize">
                 <li class="nav-item"><a href="{% url 'loggedHome'%}" class="nav-link">home</a></li>
-                <li class="nav-item"><a href="{% url 'userProfile'%}?uid={{id}}" class="nav-link">profile</a></li>
+                <li class="nav-item"><a href="{% url 'userProfile'%}?uid={{myid}}" class="nav-link">profile</a></li>
                 <li class="nav-item"><a href="#modalview" data-toggle="modal" class="nav-link">messages</a></li>
                 <li class="nav-item"><a href="notification.html" class="nav-link">docs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link active">friends</a></li>
+                <li class="nav-item"><a href="#" class="nav-link active">discover</a></li>
                 <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link ">logout</a></li>
 
             </ul>
@@ -43,7 +72,7 @@
                 <input type="text" name="search" id="search" placeholder="Search" class="form-control form-control-sm">
             </form>
             <a href="#" class="text-decoration-none" style="color:#CBE4F2;font-size:22px;"><i class="far fa-bell ml-3 d-none d-md-block"></i></a> 
-            <a href="{{profileUrl}}"><img src="/{{mydp}}" alt="" class="rounded-circle ml-3 d-none d-md-block" width="32px" height="32px"></a>
+            <a href="{% url 'userProfile' %}?uid={{myid}}"><img src="/{{mydp}}" alt="" class="rounded-circle ml-3 d-none d-md-block" width="32px" height="32px"></a>
 
         </div>
     </nav>
@@ -79,28 +108,18 @@
         {% for user in users%}                
         <div id="Uid{{user.id}}" class="card-body"><!--User-->
             <div class="media">
+                <a href="{% url 'userProfile' %}?uid={{user.id}}" >
                 <img src="/{{user.profilePicture}}" alt="img" width="55px" height="55px" class="rounded-circle mr-3">
                 <div class="media-body">
-                    <h5 class="card-title text-justify">{{user.firstName}} {{user.lastName}}</h5>
+                    <h5 class="card-title text-justify">{{user.firstName}} {{user.lastName}}</h5></a>    
                     <p class="card-text text-justify">{{user.bio}}</p>    
                 </div>
-                <small>
+                <small> 
                     <div class="input-group-text" >
+                        <div class="mx-2" id="stat{{user.id}}">now</div>  
                         <i id="btn{{user.id}}" class="fas" onclick="alert('coming soon');"></i>
                         <script>
-                            function checkAndAddBtn(){
-                            var id={{user.id}};
-                            var btn = document.getElementById('btn{{user.id}}');
-                            if(!flist.includes(id)){
-                                btn.classList.toggle('fa-plus');
-                                console.log(btn.classList.toString())
-                                
-                            }else{
-                                btn.classList.toggle('fa-times');
-
-                            }
-                        }
-                        checkAndAddBtn();
+                        checkAndAddBtn({{user.id}},{{user.flist}});
                         </script>
                         <!-- <i class="fas fa-check"></i>
                         <i class="fas fa-times"></i>
