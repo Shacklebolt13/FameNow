@@ -91,7 +91,7 @@
                             function checkAndAddBtn(){
                             var id={{user.id}};
                             var btn = document.getElementById('btn{{user.id}}');
-                            if(flist.includes(id)){
+                            if(!flist.includes(id)){
                                 btn.classList.toggle('fa-plus');
                                 console.log(btn.classList.toString())
                                 
