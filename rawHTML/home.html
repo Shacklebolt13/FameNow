@@ -1,6 +1,6 @@
 {% load static%}
 <html>
-    <head><head>
+    <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -65,7 +65,62 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
+<!---------------------START BODY---------------------------->
+<center>
+<div class="container my-10">
+    <div >
+        <div class="middle-column">
+            <div class="card" >
+                <div class="card-header bg-transparent">
+                    <form class="form-inline" id="search">
+                        <div class="input-group w-100">
+                        <input type="text" name="message" id="s" placeholder="Write A Post" class="form-control form-control-md">
+                        <div class="input-group-append">
+                                <button type="submit" class="input-group-text" >
+                                        <i class="fas fa-camera"></i>
+                                </button>
+                                <button type="submit" class="input-group-text" >
+                                        <i class="fas fa-search"></i>
+                                </button>
 
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+    {% for post in posts%}                
+    <div id="Post{{post.id}}" class="card-body"><!--User-->
+        <div class="media">
+            <a href="{% url 'userProfile' %}?uid={{user.id}}" >
+            <div class="media-body">
+                <h5 class="card-title text-justify">{{post.id}}</h5></a>   
+                <p class="card-text text-justify">{{post.body}}</p>    
+            </div>
+            <small> 
+                <div class="input-group-text" >
+                    <div class="mx-2" id="edit{{user.id}}">Edit</div>  
+                    <i id="btn{{user.id}}" class="fas" onclick="alert('coming soon');"></i>
+                    
+                    <!-- <i class="fas fa-check"></i>
+                    <i class="fas fa-times"></i>
+                    <i class="fas fa-spinner"></i> -->
+                    
+                </div>
+            </small>
+        </div>
+    </div>
+    <hr>
+    {% endfor%}
+<br> <br> <br><br> <br> <br>
+</div> 
+</center>   
+
+
+
+
+
+
+<!---------------------END BODY---------------------------->
 
 
 

@@ -1,8 +1,17 @@
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
-from .models import Detail, Friend,User
+from .models import Detail, Friend, Post,User
 from .viewHelpers import sortQ
+
+def getPosts(id :int):
+    #TODO add only friends post logic later
+    #TODO sort by created date
+    #TODO add Name and dp of author
+    posts=Post.objects.all()
+    #print(dir(posts[0]))
+    return posts
+
 
 def home(request: HttpRequest):
     #TODO additional check for login using csrf or some encryption
@@ -15,11 +24,9 @@ def home(request: HttpRequest):
         return redirect('login')
     
     id=user[0].id
-
     dp=Detail.objects.filter(user_id=id)[0].profilePicture
-    
-
-    params={'myid':id,'mydp':dp}
+    posts=getPosts(id)
+    params={'myid':id,'mydp':dp,'posts':posts}
     return render(request,'home.html',params)
 
 def profile(request: HttpRequest):
@@ -113,3 +120,8 @@ def friends(request:HttpRequest,message=""):
     print(friendList)
     params={'myid':id,'mydp':dp,'users':users,'friendList':friendList}
     return render(request,'friends.html',params)
+
+
+
+
+
