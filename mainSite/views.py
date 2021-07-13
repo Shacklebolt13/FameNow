@@ -2,6 +2,7 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Detail, Friend,User
+from .viewHelpers import sortQ
 
 def home(request: HttpRequest):
     #TODO additional check for login using csrf or some encryption
@@ -101,6 +102,10 @@ def friends(request:HttpRequest,message=""):
         user['profilePicture']=details.profilePicture
         user['bio']=details.bio
         ulist.append(user)
+    
+    if(request.method=="GET"):
+        ss=request.GET.get('s',"")
+        ulist=sortQ(ulist,ss)
 
     users=ulist
     del ulist
