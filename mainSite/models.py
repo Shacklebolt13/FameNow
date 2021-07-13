@@ -31,7 +31,5 @@ class Friend(models.Model):
 class Post(models.Model):
     author = models.OneToOneField(User, on_delete=models.CASCADE)
     body = models.CharField(max_length=250,default="")
-    img = models.ImageField(upload_to="images/useruploads/post")
     created = models.DateTimeField(auto_now_add=True, blank=True)
-
-
+    
