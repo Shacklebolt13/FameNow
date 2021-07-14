@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{% static 'mainSite/css_js/lightbox.min.css'%}">
         <script type="text/javascript" src="{% static 'mainSite/css_js/lightbox-plus-jquery.min.js' %}"></script>
         <!------------------LIght BOx for Gallery-------------->
-            
+        <link rel="icon"  href="/images/favtest.ico"/>
         
         
         </head>
@@ -95,7 +95,7 @@
                     <div class="card-header bg-transparent">
                         <form class="form-inline" id="search">
                             <div class="input-group w-100">
-                            <input type="text" name="message" id="s" placeholder="Find Someone Awesome" class="form-control form-control-md">
+                            <input type="text" name="s" id="s" placeholder="Find Someone Awesome" class="form-control form-control-md">
                             <div class="input-group-append">
                                     <button type="submit" class="input-group-text" >
                                             <i class="fas fa-search"></i>
@@ -114,10 +114,10 @@
                     <h5 class="card-title text-justify">{{user.firstName}} {{user.lastName}}</h5></a>    
                     <p class="card-text text-justify">{{user.bio}}</p>    
                 </div>
-                <small> 
-                    <div class="input-group-text" >
+                <small>  
+                    <div type="button" class="input-group-text" onclick="alert('coming soon');" >
                         <div class="mx-2" id="stat{{user.id}}">now</div>  
-                        <i id="btn{{user.id}}" class="fas" onclick="alert('coming soon');"></i>
+                        <i id="btn{{user.id}}" class="fas"></i>
                         <script>
                         checkAndAddBtn({{user.id}},{{user.flist}});
                         </script>
