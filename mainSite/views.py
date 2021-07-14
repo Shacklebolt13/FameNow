@@ -112,12 +112,11 @@ def friends(request:HttpRequest,message=""):
     
     if(request.method=="GET"):
         ss=request.GET.get('s',"")
-        ulist=sortQ(ulist,ss)
+        ulist=list(sortQ(ulist,ss))
 
     users=ulist
     del ulist
     friendList=[ friend[0] for friend in friendList]
-    print(friendList)
     params={'myid':id,'mydp':dp,'users':users,'friendList':friendList}
     return render(request,'friends.html',params)
 
