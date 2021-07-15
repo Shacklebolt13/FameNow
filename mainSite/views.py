@@ -2,7 +2,7 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Detail, Friend, Post,User
-from .viewHelpers import sortQ
+from . import viewHelpers 
 
 def getPosts(id :int):
     #TODO add only friends post logic later
@@ -82,13 +82,20 @@ def profile(request: HttpRequest):
 
 
 def friends(request:HttpRequest,message=""):
+    if(request.method=="POST"):
+        myid=request.POST.get('myid',0)
+        other=request.POST.get('userid',0)
+        if(0 in (myid,other)):
+            redirect('/')
+        return viewHelpers.evalWith(myid,other)
+
     id=request.COOKIES.get('id',None)
     if(id is None):
         redirect('/')
     user=Detail.objects.filter(user_id=id)
     if(len(user)==0):
         redirect('/')
-
+    
     user=user[0]
 
     id=user.user_id
@@ -112,7 +119,7 @@ def friends(request:HttpRequest,message=""):
     
     if(request.method=="GET"):
         ss=request.GET.get('s',"")
-        ulist=list(sortQ(ulist,ss))
+        ulist=list(viewHelpers.sortQ(ulist,ss))
 
     users=ulist
     del ulist

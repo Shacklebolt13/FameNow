@@ -23,6 +23,7 @@
         <script>
             function checkAndAddBtn(id,olist){
                 console.log(olist);
+                console.log(flist);
                 var me={{myid}};
                 var btn = document.getElementById('btn'+id);
                 var txt = document.getElementById('stat'+id);
@@ -35,19 +36,21 @@
                 
                 if(state==0){
                     btn.classList.toggle('fa-plus');    
-                    txt.innerHTML="Add Friend";                
+                    txt.innerHTML="Follow";                
+                }else if(state==2){
+                    //TODO add confirmation
+                    btn.classList.toggle('fa-times');
+                    txt.innerHTML="Unfollow";         
                 }else if(state==3){
                     //TODO add confirmation
                     btn.classList.toggle('fa-times');
-                    txt.innerHTML="Remove Friend";         
-                }else if(state==2){
-                    btn.classList.toggle('fa-spinner');
-                    txt.innerHTML="Friend Request Sent";         
+                    txt.innerHTML="Unfriend";         
                 }else{
                     btn.classList.toggle('fa-check');
-                    txt.innerHTML="Accept Friend Request";         
+                    txt.innerHTML="Follow Back";         
                 }
             }
+
         </script>
         
 
@@ -114,19 +117,25 @@
                     <h5 class="card-title text-justify">{{user.firstName}} {{user.lastName}}</h5></a>    
                     <p class="card-text text-justify">{{user.bio}}</p>    
                 </div>
-                <small>  
-                    <div type="button" class="input-group-text" onclick="alert('coming soon');" >
-                        <div class="mx-2" id="stat{{user.id}}">now</div>  
-                        <i id="btn{{user.id}}" class="fas"></i>
-                        <script>
-                        checkAndAddBtn({{user.id}},{{user.flist}});
-                        </script>
-                        <!-- <i class="fas fa-check"></i>
-                        <i class="fas fa-times"></i>
-                        <i class="fas fa-spinner"></i> -->
-                        
-                    </div>
-                </small>
+                <form action="{% url 'friends' %}" method="POST">
+                    <small>  
+                        {% csrf_token %}
+
+                        <input type="hidden" name="myid" value="{{myid}}"/></input>
+                        <input type="hidden" name="userid" value="{{user.id}}"/></input>
+                        <button type="submit" class="input-group-text" " >
+                            <div class="mx-2" id="stat{{user.id}}">now</div>  
+                            <i id="btn{{user.id}}" class="fas"></i>
+                            <script>
+                            checkAndAddBtn({{user.id}},{{user.flist}});
+                            </script>
+                            <!-- <i class="fas fa-check"></i>
+                            <i class="fas fa-times"></i>
+                            <i class="fas fa-spinner"></i> -->
+                            
+                        </button>
+                    </small>
+                </form>
             </div>
         </div>
         <hr>
