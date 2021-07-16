@@ -67,21 +67,8 @@ def profile(request: HttpRequest):
         
     flist=viewHelpers.getUserData([user[0] for user in Friend.objects.get(this=uid).others.values_list()])
     followers=viewHelpers.getUserData([user[0] for user in Friend.objects.filter(others=uid).values_list()])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    posts=Post.objects.filter(author=uid)
+    
     params={
         'myProfile':myProfile,
         'id':myId,
@@ -94,7 +81,8 @@ def profile(request: HttpRequest):
         'bio':bio,
         'mydp':mydp,
         'flist':flist,
-        'followers':followers
+        'followers':followers,
+        'posts':posts
     }
 
     return render(request,'profile.html',params)

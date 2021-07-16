@@ -122,8 +122,8 @@
                 </div>
             </div>
 
-            {% for user in followers%}
             <div class="card">
+                {% for user in followers%}
                 <div id="Uid{{user.id}}" class="card-body py-0 px-auto"><!--User-->
                     <div class="media">
                         <img src="/{{user.dp}}" alt="img" width="40px" height="40px" class="rounded-circle mr-4">
@@ -134,9 +134,10 @@
                             </div>
                         </a>  
                     </div>
-                </div>
+                </div><hr>
+                {% endfor %}
             </div>
-            {% endfor %}
+            
         </div>
       </div>
 
@@ -148,6 +149,20 @@
                         <center>POSTS GO HERE</center>  
                     </div>
                 </div>
+                <div class="card">
+                {% for post in posts%}
+                <div id="Uid{{post.author}}" class="card-body py-0 px-auto"><!--User-->
+                    <div class="media">
+                        <img src="/{{user.dp}}" alt="img" width="40px" height="40px" class="rounded-circle mr-4">
+                        <a href="{% url 'userProfile' %}?uid={{user.id}}" >   
+                            <div class="media-body">
+                                {{post.author}}
+                            </div>
+                        </a>  
+                    </div>
+                </div><hr>
+                {% endfor %}
+                </div> 
              </div>
         </div>
 
@@ -162,8 +177,8 @@
                             
                         </div>
                     </div>
-            {% for user in flist%}
             <div class="card">
+                {% for user in flist%}
                 <div id="Uid{{user.id}}" class="card-body py-0 px-auto"><!--User-->
                     <div class="media">
                         <img src="/{{user.dp}}" alt="img" width="40px" height="40px" class="rounded-circle mr-4">
@@ -174,10 +189,9 @@
                             </div>
                         </a>  
                     </div>
-                </div>
+                </div><hr>
+                {% endfor %}
             </div>
-
-            {% endfor %}
         </div>
       </div>
     </div>
