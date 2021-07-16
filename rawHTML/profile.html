@@ -153,12 +153,14 @@
                 {% for post in posts%}
                 <div id="Uid{{post.author}}" class="card-body py-0 px-auto"><!--User-->
                     <div class="media">
-                        <img src="/{{user.dp}}" alt="img" width="40px" height="40px" class="rounded-circle mr-4">
                         <a href="{% url 'userProfile' %}?uid={{user.id}}" >   
                             <div class="media-body">
                                 {{post.author}}
                             </div>
                         </a>  
+                    </div>
+                    <div class="card-body">
+                        {{post.body}}
                     </div>
                 </div><hr>
                 {% endfor %}
