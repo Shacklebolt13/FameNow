@@ -102,5 +102,87 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+
+
+<!---------------------------------------TOP ENDS---------------------------------------------------->
+
+<div class="container-fluid mx-0">
+    <div class="row">
+
+
+      <div class="col-md">
+        <div class="container">
+            <div class="card">
+                <div class="card-title">
+                    <center>FOLLOWERS</center>
+                    
+                </div>
+            </div>
+
+            {% for user in followers%}
+            <div class="card">
+                <div id="Uid{{user.id}}" class="card-body py-0 px-auto"><!--User-->
+                    <div class="media">
+                        <img src="/{{user.dp}}" alt="img" width="40px" height="40px" class="rounded-circle mr-4">
+                        <a href="{% url 'userProfile' %}?uid={{user.id}}" >
+                            
+                            <div class="media-body">
+                                {{user.name}}
+                            </div>
+                        </a>  
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+
+       
+        <div class="col-md">
+            <div class="container">
+                <div class="card">
+                    <div class="card-title">
+                        <center>POSTS GO HERE</center>  
+                    </div>
+                </div>
+             </div>
+        </div>
+
+
+      <div class="col-md">
+        <div class="container">
+            <div class="col-md">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-title">
+                            <center>FOLLOWING</center>
+                            
+                        </div>
+                    </div>
+            {% for user in flist%}
+            <div class="card">
+                <div id="Uid{{user.id}}" class="card-body py-0 px-auto"><!--User-->
+                    <div class="media">
+                        <img src="/{{user.dp}}" alt="img" width="40px" height="40px" class="rounded-circle mr-4">
+                        <a href="{% url 'userProfile' %}?uid={{user.id}}" >
+                            
+                            <div class="media-body">
+                                {{user.name}}
+                            </div>
+                        </a>  
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </body>
 </html>

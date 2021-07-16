@@ -64,7 +64,24 @@ def profile(request: HttpRequest):
         else:
             me=me[0]
             mydp=me.profilePicture
-    
+        
+    flist=viewHelpers.getUserData([user[0] for user in Friend.objects.get(this=uid).others.values_list()])
+    followers=viewHelpers.getUserData([user[0] for user in Friend.objects.filter(others=uid).values_list()])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     params={
         'myProfile':myProfile,
         'id':myId,
@@ -75,7 +92,9 @@ def profile(request: HttpRequest):
         'gender':gender,
         'dp':dp,
         'bio':bio,
-        'mydp':mydp
+        'mydp':mydp,
+        'flist':flist,
+        'followers':followers
     }
 
     return render(request,'profile.html',params)

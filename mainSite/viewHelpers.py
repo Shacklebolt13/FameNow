@@ -1,4 +1,4 @@
-from mainSite.models import Friend
+from mainSite.models import Detail, Friend, User
 from django.http import HttpRequest
 from django.shortcuts import redirect, render
 
@@ -24,3 +24,13 @@ def evalWith(me,other):
 
    return redirect('friends')
    
+def getUserData(uidList):
+   users=[]
+   for uid in uidList:
+      temp={'id':uid}
+      user=User.objects.get(id=uid)
+      temp['name']=user.firstName+" "+user.lastName
+      details=Detail.objects.get(user=uid)
+      temp['dp']=details.profilePicture
+      users.append(temp)
+   return users
